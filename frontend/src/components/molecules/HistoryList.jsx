@@ -24,34 +24,55 @@ export default function HistoryList({ items = [], onSelect, onCopy, onClear }) {
 
   if (!items || items.length === 0) {
     return (
-      <div className="text-sm text-gray-500 p-4">
-        No history yet. Generated quotes will appear here.
+      <div className="card">
+        <div className="text-center">
+          <div className="text-6xl mb-4">🎯</div>
+          <div className="text-gray-400 font-medium">
+            No history yet. Generated quotes will appear here.
+          </div>
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold">History</h3>
-        <button className="text-xs text-red-500 hover:underline" onClick={handleClear} aria-label="Clear history">Clear</button>
+        <h3 className="text-lg font-bold text-orange-300 uppercase tracking-wider flex items-center gap-2">
+          <span className="text-red-400">📚</span>
+          History
+        </h3>
+        <button 
+          className="text-xs text-red-400 hover:text-red-300 font-bold uppercase tracking-wider border border-red-500/50 px-2 py-1 rounded hover:bg-red-500/10 transition-all" 
+          onClick={handleClear} 
+          aria-label="Clear history"
+        >
+          🗑️ Clear
+        </button>
       </div>
 
-      <div className="bg-white border border-gray-100 rounded-md divide-y max-h-72 overflow-auto">
+      <div className="history-container">
         <ul>
           {items.map((it, idx) => (
-            <li key={it._id || idx} className="p-3 flex items-start justify-between gap-3">
+            <li key={it._id || idx} className="history-item">
               <div className="flex-1">
-                <button onClick={() => onSelect(idx)} className="text-left w-full">
-                  <p className="text-sm leading-snug break-words">“{it.quote}”</p>
-                  <div className="flex items-center justify-between">
-                    <p className="text-xs text-gray-400 mt-1">— {it.author}</p>
-                    <p className="text-xs text-gray-300 mt-1">{timeAgo(it.ts || it.createdAt)}</p>
+                <button onClick={() => onSelect(idx)} className="text-left w-full group">
+                  <p className="text-sm leading-snug break-words text-orange-100 group-hover:text-orange-300 transition-colors">
+                    "{it.quote}"
+                  </p>
+                  <div className="flex items-center justify-between mt-2">
+                    <p className="text-xs text-orange-300 font-semibold">— {it.author}</p>
+                    <p className="text-xs text-gray-400">{timeAgo(it.ts || it.createdAt)}</p>
                   </div>
                 </button>
               </div>
               <div className="flex-shrink-0 flex items-center gap-2 ml-3">
-                <button onClick={() => onCopy(it)} className="text-xs px-2 py-1 rounded bg-gray-50 border text-gray-600 hover:bg-gray-100">Copy</button>
+                <button 
+                  onClick={() => onCopy(it)} 
+                  className="text-xs px-3 py-1 rounded-lg bg-gray-800 border border-orange-400/50 text-orange-400 hover:bg-orange-400 hover:text-gray-900 transition-all font-bold uppercase tracking-wider"
+                >
+                  📋 Copy
+                </button>
               </div>
             </li>
           ))}

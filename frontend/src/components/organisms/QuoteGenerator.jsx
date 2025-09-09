@@ -134,18 +134,20 @@ export default function QuoteGenerator() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-6xl mx-auto space-y-6">
+    <div className="min-h-screen game-background p-6">
+      <div className="max-w-7xl mx-auto space-y-8">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="text-center space-y-4">
           <Heading>Quote Generator</Heading>
-          <div className="flex items-center gap-4">
-            <div className="text-sm">
-              Ollama: 
-              <span className={`ml-1 px-2 py-1 rounded text-xs ${
+          <div className="flex items-center justify-center gap-4">
+            <div className="text-sm font-semibold">
+              <span className="text-gray-400 uppercase tracking-wider">Ollama Status:</span>
+              <span className={`ml-2 status-badge ${
                 ollamaStatus === 'connected' 
-                  ? 'bg-green-100 text-green-700' 
-                  : 'bg-yellow-100 text-yellow-700'
+                  ? 'status-connected' 
+                  : ollamaStatus === 'disconnected'
+                  ? 'status-disconnected'
+                  : 'status-unknown'
               }`}>
                 {ollamaStatus}
               </span>
@@ -154,27 +156,27 @@ export default function QuoteGenerator() {
         </div>
 
         {/* Tabs */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center justify-center gap-4">
           <button
             type="button"
             onClick={() => setActiveTab('generator')}
-            className={`px-4 py-2 rounded-md font-medium ${activeTab === 'generator' ? 'bg-purple-600 text-white' : 'bg-white border text-gray-700'}`}>
+            className={`tab-button ${activeTab === 'generator' ? 'active' : ''}`}>
             Generator
           </button>
           <button
             type="button"
             onClick={() => setActiveTab('history')}
-            className={`px-4 py-2 rounded-md font-medium ${activeTab === 'history' ? 'bg-purple-600 text-white' : 'bg-white border text-gray-700'}`}>
+            className={`tab-button ${activeTab === 'history' ? 'active' : ''}`}>
             History
           </button>
         </div>
 
         {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {activeTab === 'generator' && (
-            <>
-              {/* Quote Display */}
-              <div className="lg:col-span-2 space-y-6">
+        {activeTab === 'generator' && (
+          <div className="max-w-4xl mx-auto space-y-8">
+            {/* Quote Display - Centered */}
+            <div className="flex justify-center">
+              <div className="w-full max-w-3xl">
                 {currentQuote ? (
                   <QuoteCard 
                     quote={currentQuote.quote}
@@ -183,48 +185,60 @@ export default function QuoteGenerator() {
                     thinking={currentQuote.thinking}
                   />
                 ) : (
-                  <div className="card animate-pulse">
-                    <div className="h-4 bg-gray-200 rounded mb-4"></div>
-                    <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                  <div className="card">
+                    <div className="h-6 bg-gradient-to-r from-gray-700 to-gray-600 rounded mb-6 animate-pulse"></div>
+                    <div className="h-6 bg-gradient-to-r from-gray-700 to-gray-600 rounded w-3/4 animate-pulse"></div>
+                    <div className="mt-4 text-gray-400 text-center font-medium">
+                      ⚡ Ready to generate epic quotes ⚡
+                    </div>
                   </div>
                 )}
 
                 {error && (
-                  <div className="mt-4 p-3 bg-red-50 border border-red-100 text-red-700 rounded">
-                    Error: {error}
+                  <div className="mt-6 p-4 bg-red-900/30 border-2 border-red-500/50 text-red-300 rounded-xl backdrop-filter backdrop-blur-sm">
+                    <div className="flex items-center gap-2">
+                      <span className="text-red-400 text-xl">⚠️</span>
+                      <strong className="font-bold uppercase tracking-wider">Error:</strong>
+                    </div>
+                    <div className="mt-2">{error}</div>
                   </div>
                 )}
-
-                {/* Quote Form */}
-                <QuoteForm onGenerate={generateQuote} isLoading={isLoading} selectedType={selectedType} onTypeChange={setSelectedType} />
-
               </div>
+            </div>
 
-              {/* History Sidebar (kept as a small preview column while in generator) */}
-              <div className="lg:col-span-1">
-                {history.length > 0 ? (
+            {/* Quote Form - Centered */}
+            <div className="flex justify-center">
+              <div className="w-full max-w-2xl">
+                <QuoteForm onGenerate={generateQuote} isLoading={isLoading} selectedType={selectedType} onTypeChange={setSelectedType} />
+              </div>
+            </div>
+
+            {/* History Section - Below form */}
+            {history.length > 0 && (
+              <div className="flex justify-center">
+                <div className="w-full max-w-3xl">
                   <HistoryList 
-                    items={history}
+                    items={history.slice(0, 5)}
                     onSelect={selectFromHistory}
                     onCopy={copyToClipboard}
                     onClear={clearHistory}
                   />
-                ) : null}
+                </div>
               </div>
-            </>
-          )}
+            )}
+          </div>
+        )}
 
-          {activeTab === 'history' && (
-            <div className="lg:col-span-3">
-              <HistoryList 
-                items={history}
-                onSelect={selectFromHistory}
-                onCopy={copyToClipboard}
-                onClear={clearHistory}
-              />
-            </div>
-          )}
-        </div>
+        {activeTab === 'history' && (
+          <div className="max-w-5xl mx-auto">
+            <HistoryList 
+              items={history}
+              onSelect={selectFromHistory}
+              onCopy={copyToClipboard}
+              onClear={clearHistory}
+            />
+          </div>
+        )}
       </div>
     </div>
   )
