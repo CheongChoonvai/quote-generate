@@ -1,12 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   body {
-    @apply bg-brand-dark text-brand-light font-orbitron;
+    @apply bg-brand-dark-navy text-brand-light-blue-gray font-times;
   }
 }
 
@@ -16,39 +14,39 @@
   }
 
   .btn-primary {
-    @apply bg-brand-yellow text-brand-dark px-6 py-3 rounded-none hover:bg-white;
+    @apply bg-brand-gold text-brand-dark-navy px-6 py-3 rounded-none hover:bg-brand-light-blue-gray border-2 border-brand-gold;
   }
 
   .btn-secondary {
-    @apply border-2 border-brand-yellow text-brand-yellow px-6 py-3 rounded-none hover:bg-brand-yellow hover:text-brand-dark;
+    @apply border-2 border-brand-gold text-brand-gold px-6 py-3 rounded-none hover:bg-brand-gold hover:text-brand-dark-navy;
   }
 
   .card {
-    @apply bg-brand-dark-2 p-6;
+    @apply bg-brand-blue-gray-dark p-6;
   }
 
   .quote-card {
-    @apply card border-2 border-brand-yellow;
+    @apply card border-4 border-brand-gold;
   }
 
   .quote-text {
-    @apply text-2xl text-white mb-4;
+    @apply text-2xl text-brand-light-blue-gray mb-4;
   }
 
   .quote-author {
-    @apply text-right text-brand-yellow;
+    @apply text-right text-brand-gold;
   }
 
   .input-field {
-    @apply w-full px-4 py-3 bg-brand-dark-2 border-2 border-gray-600 text-white focus:border-brand-yellow focus:ring-0 outline-none;
+    @apply w-full px-4 py-3 bg-brand-blue-gray-dark border-2 border-brand-medium-gray text-brand-light-blue-gray focus:border-brand-gold focus:ring-0 outline-none;
   }
 
   .history-item {
-    @apply p-4 hover:bg-brand-dark-2 border-l-4 border-transparent hover:border-brand-yellow;
+    @apply p-4 hover:bg-brand-blue-gray-dark border-l-4 border-transparent hover:border-brand-gold;
   }
 
   .history-container {
-    @apply bg-brand-dark border-2 border-gray-700 max-h-96 overflow-auto;
+    @apply bg-brand-dark-navy border-2 border-brand-medium-gray max-h-96 overflow-auto;
   }
 
   .tab-button {
@@ -56,11 +54,11 @@
   }
 
   .tab-button.active {
-    @apply bg-brand-yellow text-brand-dark;
+    @apply bg-brand-gold text-brand-dark-navy;
   }
 
   .tab-button:not(.active) {
-    @apply bg-brand-dark-2 text-white hover:bg-gray-700;
+    @apply bg-brand-blue-gray-dark text-brand-light-blue-gray hover:bg-brand-dark-navy;
   }
 
   .status-badge {
@@ -74,7 +72,6 @@
   .status-disconnected {
     @apply bg-red-500/20 text-red-400 border border-red-500/50;
   }
-
   .status-unknown {
     @apply bg-yellow-500/20 text-yellow-400 border border-yellow-500/50;
   }

@@ -38,7 +38,7 @@ Sample backend `.env` (create `backend/.env`):
 # Ollama server url (default used by project)
 OLLAMA_URL=http://localhost:11434
 # Optional: choose a model available to your Ollama instance
-OLLAMA_MODEL=deepseek-r1:1.5b
+OLLAMA_MODEL=mc
 # MongoDB connection
 MONGO_URL=mongodb://localhost:27017
 MONGO_DB=quote_generator
@@ -73,3 +73,63 @@ In development, run the frontend and backend locally in separate terminals. The 
 ## Replace
 
 Replace the placeholder author name at the top of this file with your real name before publishing to a GitHub repository.
+
+## Environment variables (frontend & backend)
+
+This project uses .env files for local development. Below are recommended variables and example files for Windows (`cmd.exe`). Place the backend file at `backend/.env` and the frontend file at `frontend/.env.local` (or `frontend/.env`).
+
+### Backend (`backend/.env`)
+
+Create `backend/.env` with these variables (example):
+
+```
+# Ollama server url (default used by project)
+OLLAMA_URL=http://localhost:11434
+# Optional: choose a model available to your Ollama instance
+OLLAMA_MODEL=mc
+# MongoDB connection
+MONGO_URL=mongodb://localhost:27017
+MONGO_DB=quote_generator
+MONGO_COLLECTION=history
+# Allowed frontend origins (comma-separated)
+FRONTEND_ORIGINS=http://localhost:5173
+# Backend port
+PORT=3001
+```
+
+How to create and start the backend on Windows (cmd.exe):
+
+```cmd
+cd backend
+npm install
+rem create backend\.env and paste the variables above
+npm run dev
+```
+
+Notes:
+- You can also set these as environment variables directly through your OS or CI provider instead of a `.env` file.
+- If Ollama is not available, the backend falls back to a sample quote endpoint (`/api/quotes/random`).
+
+### Frontend (`frontend/.env.local` or `frontend/.env`)
+
+Vite requires env variables that will be exposed to client code to be prefixed with `VITE_`. At minimum we recommend setting the backend API base URL so the frontend knows where to send requests.
+
+Create `frontend/.env.local` with these variables (example):
+
+```
+VITE_API_BASE=http://localhost:3001/api
+```
+
+How to create and start the frontend on Windows (cmd.exe):
+
+```cmd
+cd frontend
+npm install
+rem create frontend\.env.local and add VITE_API_BASE as shown above
+npm run dev
+```
+
+Using the variables in code:
+- In the frontend you can access the API base with `import.meta.env.VITE_API_BASE`. For example the existing `src/api.js` should use that value to build requests: `const base = import.meta.env.VITE_API_BASE || '/api'`.
+
+Restart the Vite dev server after changing `.env` files for changes to take effect.

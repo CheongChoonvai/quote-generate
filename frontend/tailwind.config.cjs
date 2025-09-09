@@ -3,14 +3,15 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'brand-yellow': '#FFD600',
-        'brand-red': '#FF1E56',
-        'brand-light': '#F5F5F5',
-        'brand-dark': '#121212',
-        'brand-dark-2': '#1E1E1E',
+        'brand-dark-navy': '#0A192F',
+        'brand-blue-gray-dark': '#172A45',
+        'brand-light-blue-gray': '#CCD6F6',
+        'brand-gold': '#FFD700',
+        'brand-aqua': '#64FFDA',
+        'brand-medium-gray': '#8892B0',
       },
       fontFamily: {
-        orbitron: ['Orbitron', 'sans-serif'],
+        times: ['Times New Roman', 'serif'],
       },
     },
   },

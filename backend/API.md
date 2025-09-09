@@ -26,7 +26,7 @@ npm install
 ```cmd
 set PORT=3001
 set OLLAMA_URL=http://localhost:11434
-set OLLAMA_MODEL=deepseek-r1:1.5b
+set OLLAMA_MODEL=mc
 set MONGO_URL=mongodb://localhost:27017
 set MONGO_DB=quote_generator
 set MONGO_COLLECTION=history
@@ -43,7 +43,7 @@ The server logs the bound port and expected Ollama URL at startup.
 ## Environment variables
 - PORT: port to run the backend (default: `3001`).
 - OLLAMA_URL: base URL of the Ollama server (default: `http://localhost:11434`).
-- OLLAMA_MODEL: model id to pass to Ollama when generating (default: `deepseek-r1:1.5b`).
+- OLLAMA_MODEL: model id to pass to Ollama when generating (default: `mc`).
 - MONGO_URL: connection string for MongoDB (default: `mongodb://localhost:27017`).
 - MONGO_DB: database name (default: `quote_generator`).
 - MONGO_COLLECTION: collection name for history (default: `history`).

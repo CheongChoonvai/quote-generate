@@ -24,9 +24,9 @@ export default function HistoryList({ items = [], onSelect, onCopy, onClear }) {
 
   if (!items || items.length === 0) {
     return (
-      <div className="card text-center">
+      <div className="bg-brand-blue-gray-dark text-center p-6 rounded-md">
         <div className="text-4xl mb-4">🎯</div>
-        <div className="text-gray-400 font-medium">
+        <div className="text-brand-medium-gray font-medium">
           No history yet. Generated quotes will appear here.
         </div>
       </div>
@@ -36,9 +36,9 @@ export default function HistoryList({ items = [], onSelect, onCopy, onClear }) {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-bold text-brand-yellow uppercase tracking-wider">History</h3>
+        <h3 className="text-lg font-bold text-brand-gold uppercase tracking-wider">History</h3>
         <button
-          className="text-xs text-red-400 hover:text-red-300 font-bold uppercase tracking-wider border border-red-500/50 px-2 py-1 rounded-none hover:bg-red-500/10 transition-all"
+          className="text-xs text-brand-aqua hover:text-brand-light-blue-gray font-bold uppercase tracking-wider border border-brand-medium-gray px-2 py-1 rounded-none hover:bg-brand-blue-gray-dark transition-all"
           onClick={handleClear}
           aria-label="Clear history"
         >
@@ -46,25 +46,25 @@ export default function HistoryList({ items = [], onSelect, onCopy, onClear }) {
         </button>
       </div>
 
-      <div className="history-container">
+      <div className="history-container bg-brand-dark-navy border-2 border-brand-medium-gray max-h-96 overflow-auto">
         <ul>
           {items.map((it, idx) => (
-            <li key={it._id || idx} className="history-item">
+            <li key={it._id || idx} className="history-item p-4 hover:bg-brand-blue-gray-dark border-l-4 border-transparent hover:border-brand-gold transition-all">
               <div className="flex-1">
                 <button onClick={() => onSelect(idx)} className="text-left w-full group">
-                  <p className="text-sm leading-snug break-words text-white group-hover:text-brand-yellow transition-colors">
+                  <p className="text-sm leading-snug break-words text-brand-light-blue-gray group-hover:text-brand-gold transition-colors">
                     "{it.quote}"
                   </p>
                   <div className="flex items-center justify-between mt-2">
-                    <p className="text-xs text-brand-yellow font-semibold">— {it.author}</p>
-                    <p className="text-xs text-gray-400">{timeAgo(it.ts || it.createdAt)}</p>
+                    <p className="text-xs text-brand-gold font-semibold">— {it.author}</p>
+                    <p className="text-xs text-brand-medium-gray">{timeAgo(it.ts || it.createdAt)}</p>
                   </div>
                 </button>
               </div>
               <div className="flex-shrink-0 flex items-center gap-2 ml-3">
                 <button
                   onClick={() => onCopy(it)}
-                  className="text-xs px-3 py-1 rounded-none bg-gray-800 border border-brand-yellow/50 text-brand-yellow hover:bg-brand-yellow hover:text-brand-dark transition-all font-bold uppercase tracking-wider"
+                  className="text-xs px-3 py-1 rounded-none bg-brand-blue-gray-dark border border-brand-gold/50 text-brand-gold hover:bg-brand-gold hover:text-brand-dark-navy transition-all font-bold uppercase tracking-wider"
                 >
                   Copy
                 </button>

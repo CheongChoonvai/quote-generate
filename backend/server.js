@@ -111,9 +111,10 @@ app.post('/api/quotes/generate', async (req, res) => {
       ? `Give me one short ${style} quote about ${seed}.`
       : `Give me one short ${style} quote.`;
 
-    console.log('Sending prompt to Ollama:', { prompt, model: process.env.OLLAMA_MODEL });
-
-    const MODEL = process.env.OLLAMA_MODEL || 'deepseek-r1:1.5b';
+  // Log the prompt and the resolved model value (env override or default)
+  // Default model changed to 'mc' per request.
+  const MODEL = process.env.OLLAMA_MODEL || 'mc';
+  console.log('Sending prompt to Ollama:', { prompt, model: MODEL });
     // Add temperature and max_tokens to make generations faster and more deterministic.
     const ollamaPayload = {
       model: MODEL,

@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-
-const API_BASE = import.meta?.env?.VITE_API_BASE || 'http://localhost:3001/api';
+import api from '../api';
 
 const useQuoteGenerator = () => {
   const [currentQuote, setCurrentQuote] = useState(null);
@@ -14,11 +13,8 @@ const useQuoteGenerator = () => {
   useEffect(() => {
     async function load() {
       try {
-        const res = await fetch(`${API_BASE}/history`);
-        if (res.ok) {
-          const data = await res.json();
-          setHistory(data || []);
-        }
+  const data = await api.getHistory();
+  setHistory(data || []);
       } catch (e) {
         console.warn('Failed to load history:', e);
       }
@@ -30,9 +26,8 @@ const useQuoteGenerator = () => {
 
   async function checkOllamaStatus() {
     try {
-      const response = await fetch(`${API_BASE}/ollama/status`);
-      const data = await response.json();
-      setOllamaStatus(data.status);
+  const data = await api.checkOllamaStatus();
+  setOllamaStatus(data.status);
     } catch (e) {
       setOllamaStatus('disconnected');
     }
@@ -42,8 +37,8 @@ const useQuoteGenerator = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const { seed: normalizedSeed, type: normalizedType } = normalizeInput(seed, type);
-      const quote = await callGenerateAPI(normalizedSeed, normalizedType);
+  const { seed: normalizedSeed, type: normalizedType } = normalizeInput(seed, type);
+  const quote = await api.generate(normalizedSeed, normalizedType);
       setCurrentQuote(quote);
       await saveHistory(quote);
     } catch (err) {
@@ -70,32 +65,14 @@ const useQuoteGenerator = () => {
     return { seed: normalizedSeed, type: normalizedType };
   }
 
-  async function callGenerateAPI(seed, type) {
-    const res = await fetch(`${API_BASE}/quotes/generate`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ seed, type }),
-    });
-
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({ message: 'Unknown error' }));
-      throw new Error(err.error || err.message || 'Failed to generate quote');
-    }
-
-    return res.json();
-  }
+  // generation handled by api.generate
 
   async function saveHistory(quoteObj) {
     if (!quoteObj || !quoteObj.quote) return;
     try {
-      const res = await fetch(`${API_BASE}/history`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ quote: quoteObj.quote, author: quoteObj.author, ts: Date.now() }),
-      });
+      const saved = await api.saveHistory(quoteObj);
 
-      if (res.ok) {
-        const saved = await res.json();
+      if (saved) {
         setHistory((prev) => [
           { quote: quoteObj.quote, author: quoteObj.author, ts: saved.ts, _id: saved.insertedId },
           ...prev.slice(0, 19),
