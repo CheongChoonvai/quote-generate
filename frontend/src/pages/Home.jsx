@@ -1,10 +1,11 @@
-import React from 'react'
-import QuoteGenerator from '../components/organisms/QuoteGenerator'
+import React from 'react';
+import QuoteGenerator from '../components/organisms/QuoteGenerator';
+import Wrapper from '../components/atoms/Wrapper';
 
 export default function Home() {
   return (
-    <div className="min-h-screen game-background">
+    <Wrapper>
       <QuoteGenerator />
-    </div>
-  )
+    </Wrapper>
+  );
 }

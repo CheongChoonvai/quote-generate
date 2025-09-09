@@ -1,11 +1,8 @@
-import React from 'react'
+import React from 'react';
 
-export default function Button({ children, onClick, variant = 'primary', size = 'normal', className = '', ...props }) {
-  const variantClass = variant === 'primary' ? 'btn-primary' : 'btn-secondary';
-  const sizeClass = size === 'large' ? 'btn-large' : 'btn-normal';
-  
+export default function Button({ children, onClick, className = '', ...props }) {
   return (
-    <button onClick={onClick} className={`btn ${sizeClass} ${variantClass} ${className}`} {...props}>
+    <button onClick={onClick} className={`btn ${className}`} {...props}>
       {children}
     </button>
   );

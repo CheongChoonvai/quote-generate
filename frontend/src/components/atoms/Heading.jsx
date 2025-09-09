@@ -1,5 +1,7 @@
-import React from 'react'
+import React from 'react';
 
-export default function Heading({ children, className = '' }) {
-  return <h1 className={`heading-xl ${className}`}>{children}</h1>
-}
+const Heading = ({ children }) => {
+  return <h1 className="text-4xl font-bold text-white">{children}</h1>;
+};
+
+export default Heading;
